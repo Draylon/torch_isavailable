@@ -220,6 +220,7 @@ print(f"\nMatrix multiplication on {device} took {elapsed}")
 
 # Move a lightweight *view* to CPU for scalar stats to avoid DML fallback warnings.
 try:
+    print("Moving result to CPU for stats")
     result_cpu = result.detach().to("cpu")
 except Exception as _e:
     print(f"[warn] Could not move result to CPU for stats ({_e}). Falling back to device ops.")
@@ -269,8 +270,8 @@ print(f"Result Tensor is Quantized: {result.is_quantized}")
 
 # Some storage APIs can vary across PyTorch versions; guard them.
 try:
-    print("Result Tensor Storage Size (in bytes):", result.storage().size() * result.element_size())
-    print(f"Result Tensor Storage Offset: {result.storage_offset()}")
+    print("Result Tensor Storage Size (in bytes):", result.untyped_storage().size() * result.element_size())
+    print(f"Result Tensor Storage Offset: {result.untyped_storage_offset()}")
 except Exception as e:
     print(f"Storage info not available: {e}")
 
@@ -285,11 +286,14 @@ for label, getter in [
         print(f"Result Tensor {label}: N/A ({e})")
 
 print(f"Result Tensor Device Index: {result.get_device() if result.is_cuda else 'N/A'}")
-print(f"Result Tensor is Shared: {result.is_shared()}")
+try:
+    print(f"Result Tensor is Shared: {result.is_shared()}")
+except NotImplementedError as e:
+    print(f"Result Tensor is Shared: N/A ({e})")
 print(f"Result Tensor is Pinned: {result.is_pinned()}")
-print(f"Result Tensor is Nested: {result.is_nested()}")
+print(f"Result Tensor is Nested: {result.is_nested}")
 
-if result.is_nested():
+if result.is_nested:
     # Nested tensor attributes are version-dependent; guard each call.
     def safe_call(name, fn):
         try:
