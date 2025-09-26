@@ -157,5 +157,4 @@ if result.is_nested():
     print(f"Result Tensor Nested Storage Size: {safe_call('stor', lambda: result.get_nested_storage_size())}")
     print(f"Result Tensor Nested Storage Offset: {safe_call('storoff', lambda: result.get_nested_storage_offset())}")
 
-print("Time taken for multiplication: {:.2f} seconds".format(end_time - start_time))
 print("Done")
