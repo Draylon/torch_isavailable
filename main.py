@@ -6,7 +6,7 @@ import torch
 def get_device():
     system = platform.system().lower()
     print(f"___Running on {system} OS___")
-    print(f"=============={"".join(["=" for i in range(len(ss))])}======")
+    print(f"=============={"".join(["=" for i in range(len(system))])}======")
     # Prefer DirectML on Windows if available
     if system == "windows":
         try:
