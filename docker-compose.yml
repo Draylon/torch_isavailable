@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   gpu-matmul:
-    image: pytorch/pytorch:2.4.0-cuda12.1-cudnn8-runtime
+    image: pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime
     container_name: gpu-matmul
     # Enable NVIDIA GPUs (Compose v3)
     deploy:
