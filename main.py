@@ -5,7 +5,8 @@ import torch
 # ---- Backend selection (Windows uses DirectML if available; Linux/mac use CUDA if available; else CPU) ----
 def get_device():
     system = platform.system().lower()
-
+    print(f"___Running on {system} OS___")
+    print(f"=============={"".join(["=" for i in range(len(ss))])}======")
     # Prefer DirectML on Windows if available
     if system == "windows":
         try:
