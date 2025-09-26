@@ -10,6 +10,16 @@ services:
         reservations:
           devices:
             - capabilities: ["gpu"]
+    restart: false
+    # manually-set devices
+    devices:
+      - '/dev/nvidia0:/dev/nvidia0'
+      - '/dev/nvidiactl:/dev/nvidiactl'
+      - '/dev/nvidia-uvm:/dev/nvidia-uvm'
+      - '/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools'
+      - '/dev/nvidia-caps/nvidia-cap1:/dev/nvidia-caps/nvidia-cap1'
+      - '/dev/nvidia-caps/nvidia-cap2:/dev/nvidia-caps/nvidia-cap2'
+      
     environment:
       # Set which GPUs to expose; "all" or comma-separated GPU indices (e.g. "0,1")
       NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
