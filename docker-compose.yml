@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  gpu-matmul:
+    image: pytorch/pytorch:2.4.0-cuda12.1-cudnn8-runtime
+    container_name: gpu-matmul
+    # Enable NVIDIA GPUs (Compose v3)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    environment:
+      # Set which GPUs to expose; "all" or comma-separated GPU indices (e.g. "0,1")
+      NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES:-compute,utility}
+      # Your script's "amount" (examples: "10000" or "75%")
+      AMOUNT: ${AMOUNT:-10000}
+      # Optional: dtype for your tensors (float16|float32|float64)
+      DTYPE: ${DTYPE:-float32}
+    volumes:
+      # Mount your script (adjust left path to where your file is)
+      - ./main.py:/app/main.py:ro
+    working_dir: /app
+    command: ["python", "/app/main.py", "--amount", "${AMOUNT}", "--dtype", "${DTYPE}"]
