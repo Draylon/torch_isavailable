@@ -13,12 +13,12 @@ services:
     restart: false
     # manually-set devices
     devices:
-      - '/dev/nvidia0:/dev/nvidia0'
-      - '/dev/nvidiactl:/dev/nvidiactl'
-      - '/dev/nvidia-uvm:/dev/nvidia-uvm'
-      - '/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools'
-      - '/dev/nvidia-caps/nvidia-cap1:/dev/nvidia-caps/nvidia-cap1'
-      - '/dev/nvidia-caps/nvidia-cap2:/dev/nvidia-caps/nvidia-cap2'
+      - /dev/nvidia0:/dev/nvidia0:Z
+      - /dev/nvidiactl:/dev/nvidiactl:Z
+      - /dev/nvidia-uvm:/dev/nvidia-uvm:Z
+      - /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools:Z
+      - /dev/nvidia-caps/nvidia-cap1:/dev/nvidia-caps/nvidia-cap1:Z
+      - /dev/nvidia-caps/nvidia-cap2:/dev/nvidia-caps/nvidia-cap2:Z
       
     environment:
       # Set which GPUs to expose; "all" or comma-separated GPU indices (e.g. "0,1")
