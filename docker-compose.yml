@@ -5,20 +5,10 @@ services:
     image: pytorch/pytorch:2.8.0-cuda12.9-cudnn9-runtime
     container_name: gpu-matmul
     # Enable NVIDIA GPUs (Compose v3)
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: ["gpu"]
+    devices:
+      - "nvidia.com/gpu=all"
     restart: false
     # manually-set devices
-    devices:
-      - /dev/nvidia0:/dev/nvidia0
-      - /dev/nvidiactl:/dev/nvidiactl
-      - /dev/nvidia-uvm:/dev/nvidia-uvm
-      - /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools
-      - /dev/nvidia-caps/nvidia-cap1:/dev/nvidia-caps/nvidia-cap1
-      - /dev/nvidia-caps/nvidia-cap2:/dev/nvidia-caps/nvidia-cap2
       
     environment:
       # Set which GPUs to expose; "all" or comma-separated GPU indices (e.g. "0,1")
